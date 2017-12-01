@@ -1,5 +1,24 @@
 import java.util.ArrayList;
 
+/*
+ *
+ * Soccer Standings Simulator
+ *
+ * Championship.java
+ *
+ * Created by PDiasG
+ * garci455@purdue.edu
+ *
+ * Last modified on 12/01/2017
+ *
+ */
+
+/*
+ *
+ * Championship class, contains main method to run the Soccer Standings Simulator
+ *
+ */
+
 public class Schedule {
     private Match[][] schedule;
     private Team[] teams;
