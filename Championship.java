@@ -44,6 +44,10 @@ public class Championship {
                 System.out.println("Invalid input: number of teams must be a number");
             }
 
+        int numRounds = size%2 == 0? size - 1: size; //initialize number of rounds
+        int matchesPerRound = size%2 == 0? size/2:(size - 1)/2; //initialize number of matches per rounds
+        int week = 1; //initialize week count
+
         Team[] teams = new Team[size]; //initialize teams array
 
         for (int i = 0; i < size; i++) { //input for the team's name
@@ -53,6 +57,9 @@ public class Championship {
         } //end of for
 
         Standings myStandings = new Standings(size, teams); //initialize the standings
+        Schedule mySchedule = new Schedule(numRounds, matchesPerRound, teams); //initialize the schedule
+
+        mySchedule.generateSchedule(); // generate schedule
 
         System.out.println("The Championship is ready to begin!");
         System.out.println("-----------------------------------");
@@ -79,8 +86,49 @@ public class Championship {
             //perform different actions accordingly to the players choice
             switch (choice) {
                 case 1: //see schedule
+                    String c; //menu navigator for schedule
+                    int weekExhibit = week > numRounds? numRounds:week;
+                    do {
+                        System.out.println("Week " + weekExhibit + "/" + numRounds); //print schedule
+                        mySchedule.printSchedule(weekExhibit);                       //print schedule
+                        do { //input for menu navigator
+                            System.out.println("[N]ext week \n[P]revious week\n[B]ack");
+                            c = input.nextLine();
+                        } while(!c.equalsIgnoreCase("N") && !c.equalsIgnoreCase("P") && !c.equalsIgnoreCase("B"));
+                        switch (c) {
+                            case "N": case "n":
+                                if (weekExhibit < numRounds)
+                                    weekExhibit += 1;
+                                break;
+                            case "P": case "p":
+                                if (weekExhibit > 1)
+                                    weekExhibit -= 1;
+                                break;
+                        }
+                    } while (!c.equalsIgnoreCase("B"));
                     break;
                 case 2: //simulate next round
+                    //TODO fix bug that all results are the same
+                    if (week <= numRounds) {
+                        Team[] tempTeams; //temporary array to store the teams that are playing
+                        int j;
+                        for (int i = 0; i < matchesPerRound; i++) { //iterate through every game of the round
+                            tempTeams = mySchedule.getMatch(week, i).simulate(); //simulate the game
+                            for (j = 0; j < size; j++) { //checks for the position of home team
+                                if (teams[j].getName().equals(mySchedule.getMatch(week, i).getTeamHome().getName())) {
+                                    break;
+                                }//end of if
+                            }//end of for
+                            teams[j] = tempTeams[0];
+                            for (j = 0; j < size; j++) { //checks for the position of away team
+                                if (teams[j].getName().equals(mySchedule.getMatch(week, i).getTeamAway().getName())) {
+                                    break;
+                                }//end of if
+                            }//end of for
+                            teams[j] = tempTeams[1];
+                        }//end of for
+                        week++; //advance week
+                    }
                     break;
                 case 3: //print standings
                     myStandings.printStandings();

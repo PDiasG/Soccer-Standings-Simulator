@@ -43,7 +43,15 @@ public class Match {
     //getters
     public boolean isPlayed() {
         return this.played;
-    } //end of getters
+    }
+
+    public Team getTeamHome() {
+        return this.teamHome;
+    }
+
+    public Team getTeamAway() {
+        return this.teamAway;
+    }//end of getters
 
     //setters
     public void setScore() {
