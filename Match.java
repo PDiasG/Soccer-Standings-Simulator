@@ -29,7 +29,7 @@ public class Match {
 
     private boolean played;
 
-    private Random rand = new Random(System.currentTimeMillis()); //Random object
+    private Random rand = new Random(); //Random object
 
     //constructor for Match
     public Match (Team teamHome, Team teamAway) {
@@ -55,10 +55,7 @@ public class Match {
 
     //setters
     public void setScore() {
-        rand = new Random(System.currentTimeMillis()); //Random object
-
         int randHome = rand.nextInt(100);
-        int randAway = rand.nextInt(100);
 
         if (randHome >= 0 && randHome < 15) this.goalsHome = 0; //15% of chance of scoring 0 goal
         else if (randHome >= 15 && randHome < 35) this.goalsHome = 1; //20% of chance of scoring 1 goal
@@ -68,6 +65,8 @@ public class Match {
         else if (randHome >= 90 && randHome < 95) this.goalsHome = 5; //5% of chance of scoring 5 goals
         else if (randHome >= 95 && randHome < 99) this.goalsHome = 6; //4% of chance of scoring 6 goals
         else if (randHome == 99) this.goalsHome = 7; //1% of chance of scoring 7 goals
+
+        int randAway = rand.nextInt(100);
 
         if (randAway >= 0 && randAway < 15) this.goalsAway = 0; //15% of chance of scoring 0 goal
         else if (randAway >= 15 && randAway < 35) this.goalsAway = 1; //20% of chance of scoring 1 goal
@@ -92,7 +91,7 @@ public class Match {
     public Team[] simulate(){
         Team[] teams = new Team[2];
 
-        setScore();
+        this.setScore();
 
         if (this.goalsHome > this.goalsAway) { //home team is winner
             this.teamHome.setGamesPlayed();
