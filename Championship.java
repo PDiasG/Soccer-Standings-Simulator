@@ -59,7 +59,7 @@ public class Championship {
         Standings myStandings = new Standings(size, teams); //initialize the standings
         Schedule mySchedule = new Schedule(numRounds, matchesPerRound, teams); //initialize the schedule
 
-        mySchedule.generateSchedule(); // generate schedule
+        mySchedule.generateSchedule(size); // generate schedule
 
         System.out.println("The Championship is ready to begin!");
         System.out.println("-----------------------------------");

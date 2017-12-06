@@ -7,7 +7,7 @@
  * Created by PDiasG
  * garci455@purdue.edu
  *
- * Last modified on 11/30/2017
+ * Last modified on 12/5/2017
  *
  */
 
@@ -29,14 +29,15 @@ public class Standings {
 
     //order team list according to each team's points earned
     private void orderTeamList() {
+        //TODO check for tie-breaking criteria
         Team temporaryTeam;
 
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - 1 - i; j++) {
-                if (this.teamList[i].getPoints() > this.teamList[i + 1].getPoints()) {
-                    temporaryTeam = this.teamList[i];
-                    this.teamList[i] = this.teamList[i + 1];
-                    this.teamList[i + 1] = temporaryTeam;
+                if (this.teamList[j] != null && this.teamList[j + 1] != null && this.teamList[j].getPoints() > this.teamList[j + 1].getPoints()) {
+                    temporaryTeam = this.teamList[j];
+                    this.teamList[j] = this.teamList[j + 1];
+                    this.teamList[j + 1] = temporaryTeam;
                 } //end of if
             } //end of for
         } //end of for
@@ -46,11 +47,11 @@ public class Standings {
     public void printStandings() {
         orderTeamList(); //order the teams before printing
 
-        System.out.println("    Team       MP  W  D  L  GF GA GD Pts"); //print header of table
+        System.out.println("    Team       MP   W   D   L   GF  GA  GD  Pts"); //print header of table
 
         for (int i = size - 1; i >= 0; i--) { //print every teams current stats
                                               //the last index of teamList contains the team with more points
-            System.out.printf("%2d. %-10s %2d %2d %2d %2d %2d %2d %2d %2d\n", size - i, this.teamList[i].getName(),
+                System.out.printf("%2d. %-10s %3d %3d %3d %3d %3d %3d %3d %3d\n", size - i, this.teamList[i].getName(),
                     this.teamList[i].getGamesPlayed(), this.teamList[i].getVictories(),
                     this.teamList[i].getDraws(), this.teamList[i].getDefeats(),
                     this.teamList[i].getGoalsScored(), this.teamList[i].getGoalsConceded(),

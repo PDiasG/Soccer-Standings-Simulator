@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by PDiasG
  * garci455@purdue.edu
  *
- * Last modified on 12/01/2017
+ * Last modified on 12/5/2017
  *
  */
 
@@ -39,24 +39,25 @@ public class Schedule {
         this.schedule[week][pos] = match;
     } //end of add match
 
-    public void generateSchedule() {
-        //generate a list with all matches
-        ArrayList<Match> allMatches = new ArrayList<>();
-        for (int i = 0; i < this.teams.length; i++) {
-            for (int j = i + 1; j < this.teams.length; j++) {
-                allMatches.add(new Match(teams[i], teams[j]));
+    public void generateSchedule(int teamsNum) {
+        //add matches to schedule using Round robin tournament system
+        //TODO this only works for an even number of teams, try to fix so it works with an odd number of teams as well
+        //TODO check if Round robin system is implemented as efficiently as possible
+            int teamHome = 0;
+            int teamAway = teamsNum - 1;
+            int teamHomeM1 = teamsNum - 1;
+            int teamAwayM1 = teamsNum - 1;
+            for (int i = 0; i < this.schedule.length; i++) {
+                for (int j = 0; j < this.schedule[i].length; j++) {
+                    addMatch((new Match(teams[j == 0 ? 0 : teamHome], teams[teamAway])), i, j);
+                    teamHome++;
+                    if (teamHome > (teamsNum - 1)) teamHome = 1;
+                    teamAway--;
+                    if (teamAway < 1) teamAway = teamsNum - 1;
+                } //end of for
+                teamHome = --teamHomeM1;
+                teamAway = --teamAwayM1;
             }//end of for
-        }//end of for
-
-        //add matches to schedule
-        //TODO generate algorithm  to add as many matches as you need to
-        int match = 0;
-        for (int i = 0; i < this.schedule.length; i++) {
-            for (int j = 0; j < this.schedule[i].length; j++) {
-                addMatch(allMatches.get(match), i, j);
-                match++;
-            }
-        }
     }
 
     //print schedule
