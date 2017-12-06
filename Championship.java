@@ -108,7 +108,6 @@ public class Championship {
                     } while (!c.equalsIgnoreCase("B"));
                     break;
                 case 2: //simulate next round
-                    //TODO fix bug that all results are the same
                     if (week <= numRounds) {
                         Team[] tempTeams; //temporary array to store the teams that are playing
                         int j;

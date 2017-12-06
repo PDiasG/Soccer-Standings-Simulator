@@ -55,6 +55,8 @@ public class Match {
 
     //setters
     public void setScore() {
+        rand = new Random(System.currentTimeMillis()); //Random object
+
         int randHome = rand.nextInt(100);
         int randAway = rand.nextInt(100);
 

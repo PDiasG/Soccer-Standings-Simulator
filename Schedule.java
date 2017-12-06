@@ -50,15 +50,19 @@ public class Schedule {
 
         //add matches to schedule
         //TODO generate algorithm  to add as many matches as you need to
-        addMatch(allMatches.get(0), 0, 0);
-        addMatch(allMatches.get(1), 1, 0);
-        addMatch(allMatches.get(2), 2, 0);
+        int match = 0;
+        for (int i = 0; i < this.schedule.length; i++) {
+            for (int j = 0; j < this.schedule[i].length; j++) {
+                addMatch(allMatches.get(match), i, j);
+                match++;
+            }
+        }
     }
 
     //print schedule
     public void printSchedule(int week) {
         for (int i = 0; i < schedule[week - 1].length; i++) {
-            System.out.print("Match #" + i+1 + ": ");
+            System.out.print("Match #" + (i+1) + ": ");
             if (schedule[week-1][i].isPlayed())
                 schedule[week-1][i].printCompletedMatch();
             else
